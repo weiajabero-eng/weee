@@ -50,7 +50,7 @@ async function sendToTelegram(message) {
 
                 let message = `🛒 *Nama Produk:* ${campaign.head_line}\n🏬 *Toko:* ${campaign.store}\n`;
 
-
+            }
                 // **Jika bukan Toko Modern, gunakan URL campaign biasa**
                 else {
                     let url = campaign.redirect_url || ""; // Pastikan tidak undefined
@@ -86,4 +86,5 @@ async function sendToTelegram(message) {
         }
     }
 })();
+
 
