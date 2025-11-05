@@ -64,11 +64,7 @@ for (const campaign of activeCampaigns) {
                     url = campaign.redirect_url;
                 }
 
-                // Skip URL
-                if (url === "https://grivy.app/c/rb24-grivy") {
-                    console.log(`Skipping campaign with URL: ${url}`);
-                    continue; // Lewati iterasi jika URL cocok
-                }
+    
 
                 const message = `🤖 Nama Produk: ${campaign.head_line}\n` +
                     `🔗 URL: ${url}\n\n`;
@@ -82,3 +78,4 @@ for (const campaign of activeCampaigns) {
         //await delay(60000); // Delay 1 menit sebelum memeriksa ulang
     }
 })();
+
