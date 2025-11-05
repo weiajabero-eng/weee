@@ -22,7 +22,7 @@ async function sendToTelegram(message) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                chat_id: -1002442776010,
+                chat_id: -1002329976638,
                 text: message,
                 parse_mode: 'Markdown'
             })
@@ -84,4 +84,5 @@ async function sendToTelegram(message) {
         //await delay(60000); // Delay 1 menit sebelum memeriksa ulang
     }
 })();
+
 
