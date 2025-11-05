@@ -2,20 +2,6 @@ const fs = require("fs");
 const delay = require("delay");
 const fetch = require("node-fetch");
 
-// Membaca URL dari file url.txt
-function readUrlsFromFile() {
-    return new Promise((resolve, reject) => {
-        fs.readFile('url.txt', 'utf8', (err, data) => {
-            if (err) {
-                reject("Error reading URL file: " + err);
-            } else {
-                const urls = data.split('\n').map(line => line.trim()).filter(line => line.length > 0);
-                resolve(urls);
-            }
-        });
-    });
-}
-
 async function getData() {
     const response = await fetch('https://cdn.grivy.com/FRONT/GRIVY/CACHE/WALLET/active-campaigns.json', {
         headers: {
@@ -28,7 +14,7 @@ async function getData() {
 }
 
 async function sendToTelegram(message) {
-    const urlTele = `https://api.telegram.org/bot7676663552:AAEzmr8BLsCeC61N8Z4fqPLC5OQNPEAYka8/sendMessage`;
+    const urlTele = `https://api.telegram.org/bot7085197492:AAFFfXMVs5QRaXS6NvmxSW6imf0Il0qy1kQ/sendMessage`;
     try {
         await fetch(urlTele, {
             method: 'POST',
@@ -36,7 +22,7 @@ async function sendToTelegram(message) {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                chat_id: -1002442776010,
+                chat_id: -1002329976638,
                 text: message,
                 parse_mode: 'Markdown'
             })
@@ -48,34 +34,37 @@ async function sendToTelegram(message) {
 }
 
 (async () => {
-    // Membaca URL dari file
-    let urls = [];
-    try {
-        urls = await readUrlsFromFile();
-    } catch (error) {
-        console.error(error);
-        return;
-    }
-
     while (true) {
         try {
             const data = await getData();
             const activeCampaigns = data.filter(item => 
-                item.campaign_status === "active" && 
-                (item.store === "Toko Modern") &&
-                item.coupons_finished === false
+                item.campaign_status === "active" &&
+                (item.store === "Indomaret" || item.store === "Alfamart")
             );
-
-            for (const campaign of activeCampaigns) {
-                // Pilih URL secara acak dari file
+for (const campaign of activeCampaigns) {
+                // Tentukan URL berdasarkan domain
                 let url = "";
-                if (urls.length > 0) {
-                    url = urls[Math.floor(Math.random() * urls.length)]; // Pilih URL secara acak dari file
+                if (campaign.domain === "sunlightbiocarenature") {
+                    url = `https://sunlightbiocarenature.com/c/${campaign.public_code}`;
+                } else if (campaign.domain === "djoy9") {
+                    url = `https://djoy9.id/c/${campaign.public_code}`;
+                } else if (campaign.domain === "grivy") {
+                    url = `https://grivy.app/c/${campaign.public_code}`;	
+                } else if (campaign.domain === "chill-aja.sprite") {
+                    url = `https://chill-aja.sprite.co.id/c/${campaign.public_code}`;	
+                } else if (campaign.domain === "ayo.coca-cola") {
+                    url = `https://ayo.coca-cola.co.id/c/${campaign.public_code}`;
+                } else if (campaign.domain === "niveabodyfair") {
+                    url = `https://niveabodyfair.com/c/${campaign.public_code}`;
+                } else if (campaign.domain === "id.snacksandmeals.app") {
+                    url = `https://id.snacksandmeals.app/c/${campaign.public_code}`;
+                } else if (campaign.domain === "paduannya-nikmat.frestea") {
+                    url = `https://paduannya-nikmat.frestea.co.id/c/${campaign.public_code}`;
                 } else {
-                    url = campaign.redirect_url; // fallback ke redirect URL dari kampanye
+                    url = campaign.redirect_url;
                 }
 
-                // Skip URL tertentu
+                // Skip URL
                 if (url === "https://grivy.app/c/rb24-grivy") {
                     console.log(`Skipping campaign with URL: ${url}`);
                     continue; // Lewati iterasi jika URL cocok
@@ -85,11 +74,11 @@ async function sendToTelegram(message) {
                     `🔗 URL: ${url}\n\n`;
 
                 await sendToTelegram(message);
-                // await delay(15000); // Delay 15 detik sebelum mengirim pesan berikutnya
+                //await delay(15000); // Delay 15 detik sebelum mengirim pesan berikutnya
             }
         } catch (error) {
             console.error("Error fetching data:", error);
         }
-        // await delay(60000); // Delay 1 menit sebelum memeriksa ulang
+        //await delay(60000); // Delay 1 menit sebelum memeriksa ulang
     }
 })();
