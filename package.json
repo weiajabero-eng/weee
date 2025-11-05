@@ -1,26 +1,11 @@
 {
   "dependencies": {
-    "@colors/colors": "^1.6.0",
     "chalk": "^4.1.2",
     "delay": "^5.0.0",
-    "figlet": "^1.7.0",
     "https-proxy-agent": "^7.0.5",
-    "imap": "^0.8.19",
-    "input": "^1.0.1",
-    "luxon": "^3.5.0",
-    "mailparser": "^3.7.1",
-    "moment": "^2.30.1",
-    "moment-timezone": "^0.5.45",
     "node-fetch": "^2.7.0",
-    "node-random-name": "^1.0.1",
-    "node-unique-machine-id": "^1.1.0",
-    "qrcode-terminal": "^0.12.0",
     "random-name": "^0.1.2",
     "random-useragent": "^0.5.0",
     "readline-sync": "^1.4.10",
-    "table": "^6.8.2",
-    "telegram": "^2.25.4",
-    "tonweb": "^0.0.66",
-    "uuidv4": "^6.2.13"
   }
 }
